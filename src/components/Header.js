@@ -91,6 +91,8 @@ const Container = styled.div`
   top: 0;
   width: 100vw;
   z-index: 100;
+  padding-top: 2px;
+  padding-bottom: 2px;
 `;
 
 const Content = styled.div`
@@ -197,7 +199,7 @@ const NavList = styled.li`
       align-items: center;
     }
     @media (max-width: 768px) {
-      min-width: 70px;
+      min-width: 75px;
     }
   }
   &:hover,

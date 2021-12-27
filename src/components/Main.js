@@ -11,19 +11,19 @@ const Main = (props) => {
                 </div>
                 <div>
                     <button>
-                        <img src="/images/photo.svg" alt="" />
+                        <img src="/images/photo56.png" alt="" />
                         <span>Photo</span>
                     </button>
                     <button>
-                        <img src="/images/photo.svg" alt="" />
+                        <img src="/images/video56.png" alt="" />
                         <span>Video</span>
                     </button>
                     <button>
-                        <img src="/images/photo.svg" alt="" />
+                        <img src="/images/event56.png" alt="" />
                         <span>Event</span>
                     </button>
                     <button>
-                        <img src="/images/photo.svg" alt="" />
+                        <img src="/images/article56.png" alt="" />
                         <span>Write article</span>
                     </button>
                 </div>
@@ -54,8 +54,8 @@ const Main = (props) => {
                     <SocialCounts>
                         <li>
                             <button>
-                                <img src="/images/like-button.png" alt="" />
-                                <img src="/images/like-button.png" alt="" />
+                                <img src="/images/likenew24.png" alt="" />
+                                <img src="/images/love24.png" alt="" />
                                 <span>75</span>
                             </button>
                         </li>
@@ -65,19 +65,19 @@ const Main = (props) => {
                     </SocialCounts>
                     <SocialActions>
                         <button>
-                            <img src="/images/like-button.png" alt="" />
+                            <img src="/images/like1.png" alt="" />
                             <span>Like</span>
                         </button>
                         <button>
-                            <img src="/images/like-button.png" alt="" />
+                            <img src="/images/comment24.png" alt="" />
                             <span>Comment</span>
                         </button>
                         <button>
-                            <img src="/images/like-button.png" alt="" />
+                            <img src="/images/share24.png" alt="" />
                             <span>Share</span>
                         </button>
                         <button>
-                            <img src="/images/like-button.png" alt="" />
+                            <img src="/images/send24.png" alt="" />
                             <span>Send</span>
                         </button>
                     </SocialActions>
@@ -149,6 +149,10 @@ const ShareBox = styled(CommonCard)`
             button{
                 img{
                     margin: 0 4px 0 -2px;
+                    height : 45px;
+                    @media(max-width: 768px){
+                        height: 25px;
+                    }
                 }
                 span{
                     color: #70b5f9;
