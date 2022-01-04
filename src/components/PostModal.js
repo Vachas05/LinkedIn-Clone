@@ -113,6 +113,14 @@ const ShareCreation = styled.div`
     padding: 12px 24px 12px 16px;
 `;
 
+const AssetButton = styled.button`
+    display: flex;
+    align-items: center;
+    height: 40px;
+    min-width: auto;
+    color: rgba(0,0,0,0.5);
+`;
+
 const AttachAssets = styled.div`
     align-items: center;
     display: flex;
@@ -120,14 +128,6 @@ const AttachAssets = styled.div`
     ${AssetButton} {
         width: 40px;
     }
-`;
-
-const AssetButton = styled.button`
-    display: flex;
-    align-items: center;
-    height: 40px;
-    min-width: auto;
-    color: rgba(0,0,0,0.5);
 `;
 
 const ShareComment = styled.div`
