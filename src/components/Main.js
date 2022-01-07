@@ -1,18 +1,24 @@
 import styled from "styled-components";
 import PostModal from "./PostModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { getArticlesAPI } from "../actions";
+import ReactPlayer from "react-player";
 
 const Main = (props) => {
     const [showModal, setShowModal] = useState("close");
 
+    useEffect(() => {
+        props.getArticles();
+    }, []);
+
     const handleClick = (e) => {
         e.preventDefault();
-        if(e.target !== e.currentTarget){
+        if (e.target !== e.currentTarget) {
             return;
         }
 
-        switch(showModal){
+        switch (showModal) {
             case "open":
                 setShowModal("close");
                 break;
@@ -26,97 +32,110 @@ const Main = (props) => {
     }
 
     return (
-        <Container>
-            <ShareBox>
-                <div>
-                    { props.user && props.user.photoURL ? (
-                        <img src={props.user.photoURL} alt="" /> 
-                    ) : (
-                        <img src="/images/user.svg" alt="" />
-                    )}
-                    <button onClick={handleClick} disabled={props.loading ? true : false}>
-                        Start a Post
-                    </button>
-                </div>
-                <div>
-                    <button>
-                        <img src="/images/photo56.png" alt="" />
-                        <span>Photo</span>
-                    </button>
-                    <button>
-                        <img src="/images/video56.png" alt="" />
-                        <span>Video</span>
-                    </button>
-                    <button>
-                        <img src="/images/event56.png" alt="" />
-                        <span>Event</span>
-                    </button>
-                    <button>
-                        <img src="/images/article56.png" alt="" />
-                        <span>Write article</span>
-                    </button>
-                </div>
-            </ShareBox>
-            <Content>
-                {  
-                    props.loading && <img src="/images/dots-loading.gif" alt="" />
-                }
-                <Article>
-                    <SharedActor>
-                        <a>
+        <>{props.articles.length === 0 ?
+            <p>There are no articles</p>
+            :
+            <Container>
+                <ShareBox>
+                    <div>
+                        {props.user && props.user.photoURL ? (
+                            <img src={props.user.photoURL} alt="" />
+                        ) : (
                             <img src="/images/user.svg" alt="" />
-                            <div>
-                                <span>Title</span>
-                                <span>Info</span>
-                                <span>Date</span>
-                            </div>
-                        </a>
-                        <button>
-                            <img src="/images/ellipsis.png" alt="" />
+                        )}
+                        <button onClick={handleClick} disabled={props.loading ? true : false}>
+                            Start a Post
                         </button>
-                    </SharedActor>
-                    <Description>
-                        Description
-                    </Description>
-                    <SharedImage>
-                        <a>
-                            <img src="/images/newyear.jpg" alt="" />
-                        </a>
-                    </SharedImage>
-                    <SocialCounts>
-                        <li>
-                            <button>
-                                <img src="/images/likenew24.png" alt="" />
-                                <img src="/images/love24.png" alt="" />
-                                <span>75</span>
-                            </button>
-                        </li>
-                        <li>
-                            <a>2 comments</a>
-                        </li>
-                    </SocialCounts>
-                    <SocialActions>
+                    </div>
+                    <div>
                         <button>
-                            <img src="/images/like1.png" alt="" />
-                            <span>Like</span>
+                            <img src="/images/photo56.png" alt="" />
+                            <span>Photo</span>
                         </button>
                         <button>
-                            <img src="/images/comment24.png" alt="" />
-                            <span>Comment</span>
+                            <img src="/images/video56.png" alt="" />
+                            <span>Video</span>
                         </button>
                         <button>
-                            <img src="/images/share24.png" alt="" />
-                            <span>Share</span>
+                            <img src="/images/event56.png" alt="" />
+                            <span>Event</span>
                         </button>
                         <button>
-                            <img src="/images/send24.png" alt="" />
-                            <span>Send</span>
+                            <img src="/images/article56.png" alt="" />
+                            <span>Write article</span>
                         </button>
-                    </SocialActions>
-                </Article>
-            </Content>
-            <PostModal showModal={showModal} handleClick={handleClick}/>
-        </Container>
+                    </div>
+                </ShareBox>
+                <Content>
+                    {
+                        props.loading && <img src="/images/dots-loading.gif" alt="" />
+                    }
+                    {props.articles.length > 0 && props.articles.map((article, key) => (
+                        <Article key={key}>
+                            <SharedActor>
+                                <a>
+                                    <img src={article.actor.image} alt="" />
+                                    <div>
+                                        <span>{article.actor.title}</span>
+                                        <span>{article.actor.description}</span>
+                                        <span>{article.actor.date.toDate().toLocaleDateString()}</span>
+                                    </div>
+                                </a>
+                                <button>
+                                    <img src="/images/ellipsis.png" alt="" />
+                                </button>
+                            </SharedActor>
+                            <Description>
+                                {article.desccription}
+                            </Description>
+                            <SharedImage>
+                                <a>
+                                    {
+                                        !article.sharedImg && article.video ?
+                                            (<ReactPlayer width={'100%'} url={article.video} />)
+                                            :
+                                            (
+                                                article.sharedImg && <img src={article.sharedImg} />
+                                            )
+                                    }
+                                </a>
+                            </SharedImage>
+                            <SocialCounts>
+                                <li>
+                                    <button>
+                                        <img src="/images/likenew24.png" alt="" />
+                                        <img src="/images/love24.png" alt="" />
+                                        <span>75</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <a>{article.comments} comments</a>
+                                </li>
+                            </SocialCounts>
+                            <SocialActions>
+                                <button>
+                                    <img src="/images/like1.png" alt="" />
+                                    <span>Like</span>
+                                </button>
+                                <button>
+                                    <img src="/images/comment24.png" alt="" />
+                                    <span>Comment</span>
+                                </button>
+                                <button>
+                                    <img src="/images/share24.png" alt="" />
+                                    <span>Share</span>
+                                </button>
+                                <button>
+                                    <img src="/images/send24.png" alt="" />
+                                    <span>Send</span>
+                                </button>
+                            </SocialActions>
+                        </Article>
+                    ))}
+                </Content>
+                <PostModal showModal={showModal} handleClick={handleClick} />
+            </Container>}
+        </>
     )
 };
 
@@ -292,7 +311,8 @@ const SocialCounts = styled.ul`
         font-size: 12px;
         button{
             display: flex;
-
+            border: none;
+            background-color: white;
         }
     }
 `;
@@ -309,6 +329,12 @@ const SocialActions = styled.div`
         align-items: center;
         padding: 8px;
         color: #0a66c2;
+        border: none;
+        background-color: white;
+
+        &:hover{
+            cursor: pointer;
+        }
 
         @media (min-width: 768px){
             span{
@@ -330,16 +356,13 @@ const mapStateToProps = (state) => {
     return {
         loading: state.articleState.loading,
         user: state.userState.user,
-        // articles: state.articleState.articles,
+        articles: state.articleState.articles,
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    // getArticles: () => dispatch(getArticlesAPI()),
+    getArticles: () => dispatch(getArticlesAPI()),
 })
 
-const logging = () => {
-    console.log("object");
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
