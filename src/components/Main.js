@@ -10,6 +10,7 @@ const Main = (props) => {
 
     useEffect(() => {
         props.getArticles();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleClick = (e) => {
@@ -73,7 +74,7 @@ const Main = (props) => {
                     {props.articles.length > 0 && props.articles.map((article, key) => (
                         <Article key={key}>
                             <SharedActor>
-                                <a>
+                                <a href="/#">
                                     <img src={article.actor.image} alt="" />
                                     <div>
                                         <span>{article.actor.title}</span>
@@ -89,13 +90,13 @@ const Main = (props) => {
                                 {article.desccription}
                             </Description>
                             <SharedImage>
-                                <a>
+                                <a href="/#">
                                     {
                                         !article.sharedImg && article.video ?
                                             (<ReactPlayer width={'100%'} url={article.video} />)
                                             :
                                             (
-                                                article.sharedImg && <img src={article.sharedImg} />
+                                                article.sharedImg && <img src={article.sharedImg} alt="alt"/>
                                             )
                                     }
                                 </a>
@@ -109,7 +110,7 @@ const Main = (props) => {
                                     </button>
                                 </li>
                                 <li>
-                                    <a>{article.comments} comments</a>
+                                    <a href="/#">{article.comments} comments</a>
                                 </li>
                             </SocialCounts>
                             <SocialActions>
